@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Preview - Suggestive Line</title>
+    <style>
+        body {
+            background-color: #030508;
+            color: #F4F7FA;
+            font-family: sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            border-bottom: 1px solid #5C6978;
+            padding-bottom: 10px;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background-color: #11141a;
+            border: 1px solid #5C6978;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .card img {
+            max-width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            border: 1px solid #5C6978;
+            margin-bottom: 10px;
+        }
+        .info {
+            font-size: 14px;
+            color: #9DC7FF;
+        }
+    </style>
+</head>
+<body>
+    <h1>Suggestive Line Extracted Assets Preview</h1>
+    <div class="grid" id="preview-grid"></div>
+
+    <script>
+        const assets = [
+            "extracted_p1_img1.png", "extracted_p2_img1.png", "extracted_p3_img1.png",
+            "extracted_p4_img1.png", "extracted_p5_img1.png", "extracted_p6_img1.png",
+            "extracted_p7_img1.png", "extracted_p7_img2.png", "extracted_p7_img3.png",
+            "page_1.png", "page_2.png", "page_3.png", "page_4.png", "page_5.png",
+            "page_6.png", "page_7.png", "page_8.png"
+        ];
+        const grid = document.getElementById('preview-grid');
+        assets.forEach(asset => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            const img = document.createElement('img');
+            img.src = 'assets/' + asset;
+            img.alt = asset;
+            
+            const title = document.createElement('h3');
+            title.textContent = asset;
+            
+            const info = document.createElement('div');
+            info.className = 'info';
+            
+            card.appendChild(img);
+            card.appendChild(title);
+            card.appendChild(info);
+            grid.appendChild(card);
+            
+            img.onload = function() {
+                info.textContent = `${img.naturalWidth} x ${img.naturalHeight} px`;
+            };
+        });
+    </script>
+</body>
+</html>

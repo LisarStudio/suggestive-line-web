@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUGGESTIVE LINE - Hold Me Close in the Hurricane</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Official website of Suggestive Line. Listen to the new single 'Hold Me Close in the Hurricane'. Atmospheric progressive metal / sci-fi brutalist visual experience.">
+    <meta name="keywords" content="Suggestive Line, Hold Me Close in the Hurricane, Progressive Metal, Atmospheric Metal, Sci-fi metal, New Single, Visualizer">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Bootstrap 4.6.2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Fixed Header Navigation -->
+    <nav class="sl-navbar navbar navbar-expand-lg d-flex justify-content-between align-items-center">
+        <!-- Logo Brand Mark -->
+        <a class="navbar-brand m-0" href="#home" id="nav-brand-logo">
+            <img src="assets/logo_transparent.png" alt="Suggestive Line Sigil Logo" class="logo-img">
+        </a>
+        
+        <!-- Navigation Menu Links -->
+        <ul class="sl-nav-links" id="navbar-menu">
+            <li><a class="sl-nav-link active" href="#home">HOME</a></li>
+            <li><a class="sl-nav-link" href="#music">MUSIC</a></li>
+            <li><a class="sl-nav-link" href="#lyrics">LYRICS</a></li>
+            <li><a class="sl-nav-link" href="#visuals">VISUALS</a></li>
+            <li><a class="sl-nav-link" href="#entity">THE ENTITY</a></li>
+            <li><a class="sl-nav-link" href="#contact">CONTACT</a></li>
+        </ul>
+        
+        <!-- Mobile Menu Toggle Button -->
+        <button class="sl-menu-toggle" id="menu-toggle-btn" aria-label="Toggle Navigation Menu">
+            <i class="fas fa-bars"></i>
+        </button>
+    </nav>
+
+    <!-- 02 HOMEPAGE HERO SECTION -->
+    <section id="home" class="hero-section">
+        <!-- Cold Overhead Vertical Beam -->
+        <div class="light-beam"></div>
+        
+        <!-- Particle & Rain Canvas Background -->
+        <canvas id="particles-canvas"></canvas>
+        
+        <!-- Humanoid Seated Figure Background -->
+            <div class="hero-logo-container">
+                <img src="assets/logo_transparent.png" alt="Suggestive Line Sigil" class="hero-logo-glowing">
+            </div>
+            
+            <div class="hero-content-wrapper text-spaced">
+                <div class="hero-brand-top">
+                    <span class="text-steel font-weight-bold">SUGGESTIVE LINE</span>
+                </div>
+                
+                <div class="hero-title-area">
+                    <div class="hero-label text-spectral mb-2">NEW SINGLE</div>
+                    <h1 class="hero-title font-heading text-white">
+                        HOLD ME CLOSE<br>IN THE HURRICANE
+                    </h1>
+                    <a href="#music" class="btn-sl" id="hero-play-btn">
+                        LISTEN NOW <i class="fas fa-play ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Vertical Scroll Indicator -->
+        <div class="hero-scroll-indicator">SCROLL</div>
+    </section>
+
+    <!-- 03 SINGLE MODULE SECTION -->
+    <section id="music" class="single-section section-padding border-top-steel">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Left: Square Single Cover Art -->
+                <div class="col-lg-6 col-12 d-flex justify-content-center">
+                    <div class="artwork-container">
+                        <img src="assets/cover.png" alt="Hold Me Close in the Hurricane Single Art" class="artwork-img">
+                    </div>
+                </div>
+                
+                <!-- Right: Waveform and Streaming Buttons -->
+                <div class="col-lg-6 col-12">
+                    <div class="release-content text-spaced">
+                        <div class="release-label text-spectral">NEW SINGLE RELEASE</div>
+                        <h2 class="release-title font-heading text-white">HOLD ME CLOSE IN THE HURRICANE</h2>
+                        
+                        <!-- Futuristic SoundCloud-like Player in Music Section -->
+                        <div class="sc-player" id="music-sc-player">
+                            <button class="sc-play-btn" id="sc-music-play-btn" aria-label="Play/Pause Single">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <div class="sc-player-body">
+                                <div class="sc-track-info">
+                                    <span class="sc-track-title font-heading text-white">HOLD ME CLOSE IN THE HURRICANE</span>
+                                    <span class="sc-badge">30S PREVIEW</span>
+                                </div>
+                                <div class="sc-waveform-container" id="sc-music-waveform">
+                                    <div class="sc-waveform-progress" id="sc-music-progress"></div>
+                                    <img src="assets/waveform_transparent.png" alt="Waveform" class="sc-waveform-img">
+                                </div>
+                                <div class="sc-meta">
+                                    <span class="sc-artist">SUGGESTIVE LINE</span>
+                                    <span class="sc-time" id="sc-music-time">00:00 / 00:30</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Monochrome Platforms Grid -->
+                        <div class="streaming-grid mt-4">
+                            <a href="https://spotify.com" target="_blank" rel="noopener noreferrer" class="btn-stream" id="spotify-btn">
+                                <i class="fab fa-spotify"></i> SPOTIFY
+                            </a>
+                            <a href="https://music.apple.com" target="_blank" rel="noopener noreferrer" class="btn-stream" id="apple-btn">
+                                <i class="fab fa-apple"></i> APPLE MUSIC
+                            </a>
+                            <a href="https://www.youtube.com/@SuggestiveLine" target="_blank" rel="noopener noreferrer" class="btn-stream" id="youtube-btn">
+                                <i class="fab fa-youtube"></i> YOUTUBE
+                            </a>
+                            <a href="https://deezer.com" target="_blank" rel="noopener noreferrer" class="btn-stream" id="deezer-btn">
+                                <i class="fab fa-deezer"></i> DEEZER
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 04 LYRICS / HURRICANE STRIP SECTION -->
+    <section id="lyrics" class="lyrics-section section-padding border-top-steel border-bottom-steel">
+        <!-- Floating Canvas Particles -->
+        <canvas id="particles-canvas-lyrics" style="position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:1; opacity: 0.4;"></canvas>
+        
+        <div class="container">
+            <div class="lyrics-container" id="lyrics-sync-container">
+                <!-- Large Spaced Lyrics (5 Lines matching their layout) -->
+                <div class="lyric-line" data-time="3.5">LEAVE ME NOW</div>
+                <div class="lyric-line" data-time="7.0">DON'T FADE AWAY</div>
+                <div class="lyric-line" data-time="10.5">HOLD ME CLOSE</div>
+                <div class="lyric-line" data-time="14.0">THROUGH THE</div>
+                <div class="lyric-line" data-time="18.0">HURRICANE</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 05 VISUALS GALLERY SECTION -->
+    <section id="visuals" class="visuals-section section-padding">
+        <div class="container-fluid px-md-5">
+            <!-- Centered Header -->
+            <div class="section-title-wrapper text-spaced">
+                <h2 class="section-title text-white">VISUALS</h2>
+            </div>
+            
+            <!-- Video Cards Row -->
+            <div class="video-grid">
+                <!-- Card 1 -->
+                <div class="video-card" id="video-card-1">
+                    <div class="video-thumbnail-wrapper">
+                        <img src="assets/video_card_1.png" alt="Hold Me Close in the Hurricane Official Video Thumbnail" class="video-img">
+                        <div class="video-play-overlay">
+                            <div class="video-play-btn"><i class="fas fa-play"></i></div>
+                        </div>
+                    </div>
+                    <div class="video-info text-spaced">
+                        <h3 class="video-title">Hold Me Close in the Hurricane</h3>
+                        <span class="video-category">Official Video</span>
+                    </div>
+                </div>
+                
+                <!-- Card 2 -->
+                <div class="video-card" id="video-card-2">
+                    <div class="video-thumbnail-wrapper">
+                        <img src="assets/video_card_2.png" alt="Hold Me Close in the Hurricane Visualizer Thumbnail" class="video-img">
+                        <div class="video-play-overlay">
+                            <div class="video-play-btn"><i class="fas fa-play"></i></div>
+                        </div>
+                    </div>
+                    <div class="video-info text-spaced">
+                        <h3 class="video-title">Hold Me Close in the Hurricane</h3>
+                        <span class="video-category">Visualizer</span>
+                    </div>
+                </div>
+                
+                <!-- Card 3 -->
+                <div class="video-card" id="video-card-3">
+                    <div class="video-thumbnail-wrapper">
+                        <img src="assets/video_card_3.png" alt="Behind the Silence Documentary Thumbnail" class="video-img">
+                        <div class="video-play-overlay">
+                            <div class="video-play-btn"><i class="fas fa-play"></i></div>
+                        </div>
+                    </div>
+                    <div class="video-info text-spaced">
+                        <h3 class="video-title">Behind the Silence</h3>
+                        <span class="video-category">Documentary</span>
+                    </div>
+                </div>
+                
+                <!-- Card 4 -->
+                <div class="video-card" id="video-card-4">
+                    <div class="video-thumbnail-wrapper">
+                        <img src="assets/video_card_4.png" alt="Live at the Void Live Session Thumbnail" class="video-img">
+                        <div class="video-play-overlay">
+                            <div class="video-play-btn"><i class="fas fa-play"></i></div>
+                        </div>
+                    </div>
+                    <div class="video-info text-spaced">
+                        <h3 class="video-title">Live at the Void</h3>
+                        <span class="video-category">Live Session</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 06 THE ENTITY SECTION -->
+    <section id="entity" class="entity-section section-padding border-top-steel">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Left: Portrait Character Art -->
+                <div class="col-lg-5 col-12 d-flex justify-content-center">
+                    <div class="entity-portrait-container">
+                        <img src="assets/entity_portrait.png" alt="Faceless entity portrait in shadows" class="entity-portrait-img">
+                    </div>
+                </div>
+                
+                <!-- Right: Lore manifesto -->
+                <div class="col-lg-7 col-12">
+                    <div class="entity-content">
+                        <h2 class="entity-heading font-heading text-white text-spaced">THE ENTITY</h2>
+                        <p class="entity-copy text-spaced">
+                            Suggestive Line is the voice of what remains when everything else is gone.<br><br>
+                            A journey through darkness, silence and the blurred line between holding on and letting go.
+                        </p>
+                        <div>
+                            <a href="#contact" class="btn-sl" id="read-more-btn">READ MORE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT / FOOTER SECTION -->
+    <section id="contact" class="footer-section">
+        <div class="container text-center">
+            <!-- Center Sigil -->
+            <div class="footer-logo-container">
+                <a href="#home">
+                    <img src="assets/logo_transparent.png" alt="Suggestive Line Sigil" class="footer-logo">
+                </a>
+            </div>
+            
+            <!-- Social links -->
+            <ul class="footer-social-links">
+                <li><a href="https://www.instagram.com/suggestiveline" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a></li>
+                <li><a href="https://open.spotify.com" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="Spotify"><i class="fab fa-spotify"></i></a></li>
+                <li><a href="https://www.youtube.com/@SuggestiveLine" target="_blank" rel="noopener noreferrer" class="footer-social-link" aria-label="YouTube"><i class="fab fa-youtube"></i></a></li>
+            </ul>
+            
+            <!-- Quiet Copyright -->
+            <p class="footer-legal m-0 text-spaced">
+                &copy; 2026 SUGGESTIVE LINE. ALL RIGHTS RESERVED.
+            </p>
+        </div>
+    </section>
+
+    <!-- Interactive Lightbox Video Modal -->
+    <div class="sl-video-modal" id="video-lightbox-modal">
+        <div class="sl-video-modal-content">
+            <button class="sl-video-modal-close" aria-label="Close Video modal">CLOSE [X]</button>
+            <iframe class="sl-video-modal-iframe" src="" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Bootstrap 4 dependencies and script -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
+    
+    <!-- Custom JavaScript Interactions -->
+    <script src="script.js"></script>
+    
+    <!-- Audio-lyrics bridge script (Optional extra for lyrics canvas) -->
+    <script>
+        // Set up separate lyrics section particle flow (slower, floating drift)
+        const canvasL = document.getElementById("particles-canvas-lyrics");
+        if (canvasL) {
+            const ctxL = canvasL.getContext("2d");
+            let particlesL = [];
+            
+            const resizeL = () => {
+                canvasL.width = canvasL.parentElement.offsetWidth;
+                canvasL.height = canvasL.parentElement.offsetHeight;
+            };
+            resizeL();
+            window.addEventListener("resize", resizeL);
+            
+            class FloatingDebris {
+                constructor() {
+                    this.reset();
+                    this.y = Math.random() * canvasL.height;
+                }
+                reset() {
+                    this.x = Math.random() * canvasL.width;
+                    this.y = canvasL.height + 20;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedY = -(Math.random() * 0.4 + 0.1);
+                    this.speedX = Math.random() * 0.4 - 0.2;
+                    this.opacity = Math.random() * 0.3 + 0.1;
+                }
+                update() {
+                    this.y += this.speedY;
+                    this.x += this.speedX;
+                    if (this.y < -20 || this.x < -20 || this.x > canvasL.width + 20) {
+                        this.reset();
+                    }
+                }
+                draw() {
+                    ctxL.beginPath();
+                    ctxL.fillStyle = `rgba(157, 199, 255, ${this.opacity})`;
+                    ctxL.arc(this.x, this.y, this.size, 0, Math.PI*2);
+                    ctxL.fill();
+                }
+            }
+            
+            for(let i=0; i<30; i++) {
+                particlesL.push(new FloatingDebris());
+            }
+            
+            const animateL = () => {
+                ctxL.clearRect(0, 0, canvasL.width, canvasL.height);
+                particlesL.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animateL);
+            };
+            
+            if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                animateL();
+            }
+        }
+    </script>
+</body>
+</html>
