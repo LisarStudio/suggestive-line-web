@@ -229,7 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // 7. Interactive Audio Player (SoundCloud-like Sync, 30s Limit, Lyrics Sync)
-    const audio = new Audio("assets/audio.mp3");
+    const audio = document.getElementById("main-audio");
     const maxPreviewDuration = 30; // 30s preview limit
 
     const ctaPlayBtn = document.getElementById("hero-play-btn");
@@ -242,10 +242,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const lyricLines = document.querySelectorAll(".lyric-line");
     
     const heroSection = document.getElementById("home");
-    const heroLogo = document.querySelector(".hero-logo-glowing");
+    const heroLogoMouseMove = document.getElementById("hero-logo-mouse-move");
+
+    // Log audio loading errors for debugging
+    if (audio) {
+        audio.addEventListener("error", (e) => {
+            console.error("Audio error event: ", e);
+            if (musicTime) {
+                musicTime.textContent = "Error loading single";
+            }
+        });
+    }
 
     // Interactive mousemove logo parallax
-    if (heroSection && heroLogo) {
+    if (heroSection && heroLogoMouseMove) {
         heroSection.addEventListener("mousemove", (e) => {
             const rect = heroSection.getBoundingClientRect();
             // Mouse position relative to center of hero section
@@ -256,11 +266,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const moveX = (x / (rect.width / 2)) * 15;
             const moveY = (y / (rect.height / 2)) * 15;
             
-            heroLogo.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            heroLogoMouseMove.style.transform = `translate(${moveX}px, ${moveY}px)`;
         });
         
         heroSection.addEventListener("mouseleave", () => {
-            heroLogo.style.transform = "translate(0px, 0px)";
+            heroLogoMouseMove.style.transform = "translate(0px, 0px)";
         });
     }
 

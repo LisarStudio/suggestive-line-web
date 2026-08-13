@@ -1014,13 +1014,19 @@ body::before {
     /* Will be translated on scroll via JS */
     transition: transform 0.1s ease-out;
 }
+.hero-logo-mouse-move {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    transition: transform 0.15s ease-out;
+}
 .hero-logo-glowing {
     width: 100%;
     height: auto;
     object-fit: contain;
     filter: drop-shadow(0 0 15px rgba(157, 199, 255, 0.4)) brightness(1.0);
     animation: logo-spectral-pulse 5s ease-in-out infinite alternate, logo-glitch-loop 8s infinite;
-    transition: transform 0.15s ease-out;
 }
 @keyframes logo-spectral-pulse {
     0% {
