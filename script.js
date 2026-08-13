@@ -68,18 +68,29 @@ document.addEventListener("DOMContentLoaded", () => {
     const heroSection = document.getElementById("home");
     const heroCharacter = document.querySelector(".hero-character-container");
     const lightBeam = document.querySelector(".light-beam");
+    const heroLogoBox = document.getElementById("hero-logo-parallax-box");
 
-    if (heroSection && heroCharacter && lightBeam) {
+    if (heroSection) {
         window.addEventListener("scroll", () => {
             const scrollPos = window.scrollY;
-            const speedChar = 0.08;
-            const speedBeam = -0.05;
-
+            
             // Character floats down slightly slower than scroll
-            heroCharacter.style.transform = `translate(-50%, calc(-50% + ${scrollPos * speedChar}px))`;
+            if (heroCharacter) {
+                const speedChar = 0.08;
+                heroCharacter.style.transform = `translate(-50%, calc(-50% + ${scrollPos * speedChar}px))`;
+            }
             
             // Light beam drifts slightly in opposite direction
-            lightBeam.style.transform = `translateX(calc(-50% + ${scrollPos * speedBeam}px))`;
+            if (lightBeam) {
+                const speedBeam = -0.05;
+                lightBeam.style.transform = `translateX(calc(-50% + ${scrollPos * speedBeam}px))`;
+            }
+            
+            // Logo container floats down/up slightly
+            if (heroLogoBox) {
+                const speedLogo = 0.12;
+                heroLogoBox.style.transform = `translate(-50%, calc(-50% + ${scrollPos * speedLogo}px))`;
+            }
         });
     }
 

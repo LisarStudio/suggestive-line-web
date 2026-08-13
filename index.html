@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom Style Sheet -->
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.5">
 </head>
 <body>
 
@@ -56,24 +56,26 @@
         <canvas id="particles-canvas"></canvas>
         
         <!-- Humanoid Seated Figure Background -->
-            <div class="hero-logo-container">
-                <img src="assets/logo_transparent.png" alt="Suggestive Line Sigil" class="hero-logo-glowing">
-            </div>
+        <div class="hero-character-container">
+            <img src="assets/hero_character.png" alt="Seated Humanoid Entity in Shadow" class="hero-character-img">
+        </div>
+        
+        <!-- Floating large logo in Hero with mouse parallax, scroll parallax and glitch -->
+        <div class="hero-logo-container" id="hero-logo-parallax-box">
+            <img src="assets/logo_transparent.png" alt="Suggestive Line Sigil" class="hero-logo-glowing">
+        </div>
+        
+        <!-- Hero Foreground Content -->
+        <div class="hero-content-wrapper text-spaced">
+            <div class="hero-brand-top"></div>
             
-            <div class="hero-content-wrapper text-spaced">
-                <div class="hero-brand-top">
-                    <span class="text-steel font-weight-bold">SUGGESTIVE LINE</span>
-                </div>
-                
-                <div class="hero-title-area">
-                    <div class="hero-label text-spectral mb-2">NEW SINGLE</div>
-                    <h1 class="hero-title font-heading text-white">
-                        HOLD ME CLOSE<br>IN THE HURRICANE
-                    </h1>
-                    <a href="#music" class="btn-sl" id="hero-play-btn">
-                        LISTEN NOW <i class="fas fa-play ml-2"></i>
-                    </a>
-                </div>
+            <div class="hero-title-area">
+                <h1 class="hero-title font-heading text-white">
+                    HOLD ME CLOSE<br>IN THE HURRICANE
+                </h1>
+                <a href="#music" class="btn-sl" id="hero-play-btn">
+                    LISTEN NOW <i class="fas fa-play ml-2"></i>
+                </a>
             </div>
         </div>
         
@@ -95,7 +97,6 @@
                 <!-- Right: Waveform and Streaming Buttons -->
                 <div class="col-lg-6 col-12">
                     <div class="release-content text-spaced">
-                        <div class="release-label text-spectral">NEW SINGLE RELEASE</div>
                         <h2 class="release-title font-heading text-white">HOLD ME CLOSE IN THE HURRICANE</h2>
                         
                         <!-- Futuristic SoundCloud-like Player in Music Section -->
@@ -291,7 +292,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     
     <!-- Custom JavaScript Interactions -->
-    <script src="script.js"></script>
+    <script src="script.js?v=1.5"></script>
     
     <!-- Audio-lyrics bridge script (Optional extra for lyrics canvas) -->
     <script>
