@@ -311,14 +311,29 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const togglePlayback = () => {
+        console.log("togglePlayback triggered. audio object:", audio);
+        if (!audio) {
+            console.error("Audio element not found in DOM!");
+            return;
+        }
+        
         if (audio.paused) {
+            console.log("Audio is currently paused. Triggering play()...");
             audio.play().then(() => {
+                console.log("Audio playback started successfully.");
                 updatePlayerUI();
             }).catch(err => {
-                console.log("Playback blocked by browser settings. User interaction required first.", err);
-                audio.play(); // fallback
+                console.error("Playback failed or blocked by browser autoplay policy:", err);
+                // Safe fallback attempt
+                console.log("Retrying fallback audio playback...");
+                audio.play().then(() => {
+                    updatePlayerUI();
+                }).catch(retryErr => {
+                    console.error("Playback fallback retry failed:", retryErr);
+                });
             });
         } else {
+            console.log("Audio is currently playing. Triggering pause()...");
             audio.pause();
             updatePlayerUI();
         }
