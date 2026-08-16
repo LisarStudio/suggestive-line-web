@@ -228,34 +228,35 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 7. Interactive Audio Player (SoundCloud-like Sync, 30s Limit, Lyrics Sync)
-    const audio = document.getElementById("main-audio");
-    const maxPreviewDuration = 30;
-
-    const ctaPlayBtn = document.getElementById("hero-play-btn");
-    const musicPlayBtn = document.getElementById("sc-music-play-btn");
-    const musicWaveform = document.getElementById("sc-music-waveform");
-    const musicProgress = document.getElementById("sc-music-progress");
-    const musicTime = document.getElementById("sc-music-time");
+    // 7. Multi-Track Audio Player (4 tracks, 1:30 limit, streaming glow)
+    const TRACK_COUNT = 4;
+    const MAX_PREVIEW = 90; // 1:30 in seconds
+    const trackAudios = [];
+    const trackPlayBtns = [];
+    const trackPlayers = [];
+    const trackProgresses = [];
+    const trackTimes = [];
+    const trackWaveforms = [];
     
+    for (let i = 0; i < TRACK_COUNT; i++) {
+        trackAudios[i] = document.getElementById(`track-audio-${i}`);
+        trackPlayBtns[i] = document.querySelector(`.track-play-btn[data-track-index="${i}"]`);
+        trackPlayers[i] = document.querySelector(`.track-player[data-track-index="${i}"]`);
+        trackProgresses[i] = document.querySelector(`.track-progress[data-track-index="${i}"]`);
+        trackTimes[i] = document.querySelector(`.track-time[data-track-index="${i}"]`);
+        trackWaveforms[i] = document.querySelector(`.track-waveform[data-track-index="${i}"]`);
+    }
+    
+    const streamingGrid = document.getElementById("streaming-buttons");
     const lyricsSection = document.getElementById("lyrics");
     const lyricLinesAudio = document.querySelectorAll(".lyric-line");
-    
+    const ctaPlayBtn = document.getElementById("hero-play-btn");
     const heroLogoMouseMove = document.getElementById("hero-logo-mouse-move");
     const heroSectionEl = document.getElementById("home");
+    
+    let currentTrack = -1; // no track playing
 
-    // Log audio loading errors
-    if (audio) {
-        audio.addEventListener("error", (e) => {
-            console.error("Audio load error:", e);
-        });
-        
-        audio.addEventListener("canplaythrough", () => {
-            console.log("Audio ready to play through.");
-        });
-    }
-
-    // Interactive mousemove logo parallax
+    // Mouse parallax on hero logo
     if (heroSectionEl && heroLogoMouseMove) {
         heroSectionEl.addEventListener("mousemove", (e) => {
             const rect = heroSectionEl.getBoundingClientRect();
@@ -265,127 +266,160 @@ document.addEventListener("DOMContentLoaded", () => {
             const moveY = (y / (rect.height / 2)) * 12;
             heroLogoMouseMove.style.transform = `translate(${moveX}px, ${moveY}px)`;
         });
-        
         heroSectionEl.addEventListener("mouseleave", () => {
             heroLogoMouseMove.style.transform = "translate(0px, 0px)";
         });
     }
 
-    // Sync UI play/pause states
-    const updatePlayerUI = () => {
-        if (!audio) return;
-        const isPlaying = !audio.paused;
-        
+    const formatTime = (secs) => {
+        const m = Math.floor(secs / 60);
+        const s = Math.floor(secs % 60);
+        return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+    };
+
+    // Stop all tracks and reset UI
+    const stopAllTracks = () => {
+        for (let i = 0; i < TRACK_COUNT; i++) {
+            if (trackAudios[i] && !trackAudios[i].paused) {
+                trackAudios[i].pause();
+            }
+            if (trackPlayBtns[i]) {
+                trackPlayBtns[i].innerHTML = '<i class="fas fa-play"></i>';
+                trackPlayBtns[i].classList.remove("playing");
+            }
+            if (trackPlayers[i]) {
+                trackPlayers[i].classList.remove("track-active");
+            }
+        }
+        // Update hero button
         if (ctaPlayBtn) {
-            ctaPlayBtn.innerHTML = isPlaying
-                ? 'PAUSE <i class="fas fa-pause ml-2"></i>'
-                : 'LISTEN NOW <i class="fas fa-play ml-2"></i>';
-            ctaPlayBtn.classList.toggle("playing", isPlaying);
+            ctaPlayBtn.innerHTML = 'LISTEN NOW <i class="fas fa-play ml-2"></i>';
+            ctaPlayBtn.classList.remove("playing");
         }
-        
-        if (musicPlayBtn) {
-            musicPlayBtn.innerHTML = isPlaying
-                ? '<i class="fas fa-pause"></i>'
-                : '<i class="fas fa-play"></i>';
-            musicPlayBtn.classList.toggle("playing", isPlaying);
-        }
-        
-        if (lyricsSection) {
-            lyricsSection.classList.toggle("playing-mode", isPlaying);
+        // Reset lyrics
+        if (lyricsSection) lyricsSection.classList.remove("playing-mode");
+        lyricLinesAudio.forEach(l => l.classList.remove("active-sync"));
+        currentTrack = -1;
+    };
+
+    // Activate streaming glow
+    const activateStreamingGlow = () => {
+        if (streamingGrid) {
+            streamingGrid.classList.add("glow-active");
+            // Auto-remove glow after 15 seconds
+            setTimeout(() => {
+                streamingGrid.classList.remove("glow-active");
+            }, 15000);
         }
     };
 
-    const togglePlayback = () => {
-        if (!audio) {
-            console.error("No audio element found");
+    // Play a specific track
+    const playTrack = (index) => {
+        if (!trackAudios[index]) return;
+        
+        // If clicking the same track that's playing, pause it
+        if (currentTrack === index && !trackAudios[index].paused) {
+            trackAudios[index].pause();
+            trackPlayBtns[index].innerHTML = '<i class="fas fa-play"></i>';
+            trackPlayBtns[index].classList.remove("playing");
+            trackPlayers[index].classList.remove("track-active");
+            if (ctaPlayBtn && index === 2) {
+                ctaPlayBtn.innerHTML = 'LISTEN NOW <i class="fas fa-play ml-2"></i>';
+                ctaPlayBtn.classList.remove("playing");
+            }
+            if (lyricsSection && index === 2) lyricsSection.classList.remove("playing-mode");
+            currentTrack = -1;
             return;
         }
         
-        if (audio.paused) {
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    updatePlayerUI();
-                }).catch(err => {
-                    console.error("Playback error:", err);
-                });
-            }
-        } else {
-            audio.pause();
-            updatePlayerUI();
+        // Stop any other track
+        stopAllTracks();
+        
+        // Play the new track
+        currentTrack = index;
+        const playPromise = trackAudios[index].play();
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                trackPlayBtns[index].innerHTML = '<i class="fas fa-pause"></i>';
+                trackPlayBtns[index].classList.add("playing");
+                trackPlayers[index].classList.add("track-active");
+                // If it's track 3 (Hold Me Close), sync with hero button & lyrics
+                if (index === 2) {
+                    if (ctaPlayBtn) {
+                        ctaPlayBtn.innerHTML = 'PAUSE <i class="fas fa-pause ml-2"></i>';
+                        ctaPlayBtn.classList.add("playing");
+                    }
+                    if (lyricsSection) lyricsSection.classList.add("playing-mode");
+                }
+            }).catch(err => {
+                console.error("Playback error:", err);
+            });
         }
     };
 
-    // Bind LISTEN NOW button (now a <button> element)
+    // Bind play buttons for each track
+    for (let i = 0; i < TRACK_COUNT; i++) {
+        if (trackPlayBtns[i]) {
+            trackPlayBtns[i].addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                playTrack(i);
+            });
+        }
+        
+        // Waveform scrubbing
+        if (trackWaveforms[i]) {
+            trackWaveforms[i].addEventListener("click", (e) => {
+                if (!trackAudios[i]) return;
+                const rect = trackWaveforms[i].getBoundingClientRect();
+                const pct = (e.clientX - rect.left) / rect.width;
+                trackAudios[i].currentTime = pct * MAX_PREVIEW;
+                if (trackAudios[i].paused) {
+                    playTrack(i);
+                }
+            });
+        }
+        
+        // Timeupdate for each track
+        if (trackAudios[i]) {
+            trackAudios[i].addEventListener("timeupdate", () => {
+                let current = trackAudios[i].currentTime;
+                
+                // Enforce 1:30 preview limit
+                if (current >= MAX_PREVIEW) {
+                    trackAudios[i].pause();
+                    trackAudios[i].currentTime = 0;
+                    stopAllTracks();
+                    // Trigger streaming glow!
+                    activateStreamingGlow();
+                    return;
+                }
+                
+                const pct = (current / MAX_PREVIEW) * 100;
+                if (trackProgresses[i]) trackProgresses[i].style.width = `${pct}%`;
+                if (trackTimes[i]) trackTimes[i].textContent = `${formatTime(current)} / ${formatTime(MAX_PREVIEW)}`;
+                
+                // Lyrics sync only for track 3 (index 2)
+                if (i === 2 && !trackAudios[i].paused) {
+                    let activeLine = null;
+                    lyricLinesAudio.forEach(line => {
+                        const t = parseFloat(line.getAttribute("data-time"));
+                        if (current >= t) activeLine = line;
+                    });
+                    lyricLinesAudio.forEach(line => {
+                        line.classList.toggle("active-sync", line === activeLine);
+                    });
+                }
+            });
+        }
+    }
+
+    // Hero LISTEN NOW button plays/pauses track 3 (Hold Me Close)
     if (ctaPlayBtn) {
         ctaPlayBtn.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
-            togglePlayback();
-        });
-    }
-
-    // Bind SoundCloud play button
-    if (musicPlayBtn) {
-        musicPlayBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            togglePlayback();
-        });
-    }
-
-    // Track audio timeupdate
-    audio && audio.addEventListener("timeupdate", () => {
-        let current = audio.currentTime;
-        
-        // Enforce 30s preview limit
-        if (current >= maxPreviewDuration) {
-            audio.pause();
-            audio.currentTime = 0;
-            current = 0;
-            updatePlayerUI();
-        }
-        
-        const pct = (current / maxPreviewDuration) * 100;
-        
-        if (musicProgress) {
-            musicProgress.style.width = `${pct}%`;
-        }
-        
-        const formatSecs = (val) => String(Math.floor(val)).padStart(2, '0');
-        if (musicTime) {
-            musicTime.textContent = `00:${formatSecs(current)} / 00:${formatSecs(maxPreviewDuration)}`;
-        }
-        
-        // Sync lyric line highlighting
-        if (!audio.paused) {
-            let activeLine = null;
-            lyricLinesAudio.forEach(line => {
-                const lineTime = parseFloat(line.getAttribute("data-time"));
-                if (current >= lineTime) {
-                    activeLine = line;
-                }
-            });
-            
-            lyricLinesAudio.forEach(line => {
-                line.classList.toggle("active-sync", line === activeLine);
-            });
-        } else {
-            lyricLinesAudio.forEach(line => line.classList.remove("active-sync"));
-        }
-    });
-
-    // Waveform scrubbing
-    if (musicWaveform) {
-        musicWaveform.addEventListener("click", (e) => {
-            if (!audio) return;
-            const rect = musicWaveform.getBoundingClientRect();
-            const clickX = e.clientX - rect.left;
-            const pct = clickX / rect.width;
-            audio.currentTime = pct * maxPreviewDuration;
-            if (audio.paused) {
-                audio.play().then(updatePlayerUI);
-            }
+            playTrack(2); // Track 3 = index 2
         });
     }
 
@@ -395,7 +429,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const videoClose = document.querySelector(".sl-video-modal-close");
     const iframe = document.querySelector(".sl-video-modal-iframe");
 
-    // YouTube atmospheric links
     const youtubeVideos = [
         "https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&mute=1",
         "https://www.youtube.com/embed/6m6jWfP87Zc?autoplay=1&mute=1",
@@ -409,11 +442,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const vidSrc = youtubeVideos[idx] || youtubeVideos[0];
                 iframe.setAttribute("src", vidSrc);
                 videoModal.classList.add("active");
-                // Stop audio playing during video playback
-                if (!audio.paused) {
-                    audio.pause();
-                    updatePlayerUI();
-                }
+                stopAllTracks();
             }
         });
     });

@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom Style Sheet -->
-    <link rel="stylesheet" href="style.css?v=3.0">
+    <link rel="stylesheet" href="style.css?v=4.0">
 </head>
 <body>
 
@@ -90,45 +90,114 @@
         <div class="hero-scroll-indicator">SCROLL</div>
     </section>
 
-    <!-- 03 SINGLE MODULE SECTION -->
+    <!-- 03 MUSIC / TRACKLIST SECTION -->
     <section id="music" class="single-section section-padding border-top-steel">
         <div class="container">
             <div class="row align-items-center">
-                <!-- Left: Square Single Cover Art -->
-                <div class="col-lg-6 col-12 d-flex justify-content-center">
+                <!-- Left: Square Cover Art -->
+                <div class="col-lg-5 col-12 d-flex justify-content-center mb-4 mb-lg-0">
                     <div class="artwork-container">
-                        <img src="assets/cover.png" alt="Hold Me Close in the Hurricane Single Art" class="artwork-img">
+                        <img src="assets/cover.png" alt="Hold Me Close in the Hurricane - Album Art" class="artwork-img">
                     </div>
                 </div>
                 
-                <!-- Right: Waveform and Streaming Buttons -->
-                <div class="col-lg-6 col-12">
+                <!-- Right: Tracklist Player + Streaming -->
+                <div class="col-lg-7 col-12">
                     <div class="release-content text-spaced">
-                        <h2 class="release-title font-heading text-white">HOLD ME CLOSE IN THE HURRICANE</h2>
+                        <h2 class="release-title font-heading text-white" style="font-size: clamp(1.2rem, 2.5vw, 1.8rem); margin-bottom: 2rem;">TRACKLIST</h2>
                         
-                        <!-- Futuristic SoundCloud-like Player in Music Section -->
-                        <div class="sc-player" id="music-sc-player">
-                            <button class="sc-play-btn" id="sc-music-play-btn" aria-label="Play/Pause Single">
+                        <!-- Hidden audio elements -->
+                        <audio id="track-audio-0" preload="auto"><source src="assets/track_01_hello_world.mp3" type="audio/mpeg"></audio>
+                        <audio id="track-audio-1" preload="auto"><source src="assets/track_02_i_feel_so_low.mp3" type="audio/mpeg"></audio>
+                        <audio id="track-audio-2" preload="auto"><source src="assets/audio.mp3" type="audio/mpeg"></audio>
+                        <audio id="track-audio-3" preload="auto"><source src="assets/track_04_extend_my_life.mp3" type="audio/mpeg"></audio>
+
+                        <!-- Track 1: Hello World -->
+                        <div class="sc-player track-player" data-track-index="0">
+                            <button class="sc-play-btn track-play-btn" data-track-index="0" aria-label="Play Hello World">
                                 <i class="fas fa-play"></i>
                             </button>
                             <div class="sc-player-body">
                                 <div class="sc-track-info">
-                                    <span class="sc-track-title font-heading text-white">HOLD ME CLOSE IN THE HURRICANE</span>
-                                    <span class="sc-badge">30S PREVIEW</span>
+                                    <span class="sc-track-number">01</span>
+                                    <span class="sc-track-title font-heading text-white">HELLO WORLD</span>
                                 </div>
-                                <div class="sc-waveform-container" id="sc-music-waveform">
-                                    <div class="sc-waveform-progress" id="sc-music-progress"></div>
+                                <div class="sc-waveform-container track-waveform" data-track-index="0">
+                                    <div class="sc-waveform-progress track-progress" data-track-index="0"></div>
                                     <img src="assets/waveform_transparent.png" alt="Waveform" class="sc-waveform-img">
                                 </div>
                                 <div class="sc-meta">
                                     <span class="sc-artist">SUGGESTIVE LINE</span>
-                                    <span class="sc-time" id="sc-music-time">00:00 / 00:30</span>
+                                    <span class="sc-time track-time" data-track-index="0">00:00 / 01:30</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Track 2: I Feel So Low -->
+                        <div class="sc-player track-player" data-track-index="1">
+                            <button class="sc-play-btn track-play-btn" data-track-index="1" aria-label="Play I Feel So Low">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <div class="sc-player-body">
+                                <div class="sc-track-info">
+                                    <span class="sc-track-number">02</span>
+                                    <span class="sc-track-title font-heading text-white">I FEEL SO LOW</span>
+                                </div>
+                                <div class="sc-waveform-container track-waveform" data-track-index="1">
+                                    <div class="sc-waveform-progress track-progress" data-track-index="1"></div>
+                                    <img src="assets/waveform_transparent.png" alt="Waveform" class="sc-waveform-img">
+                                </div>
+                                <div class="sc-meta">
+                                    <span class="sc-artist">SUGGESTIVE LINE</span>
+                                    <span class="sc-time track-time" data-track-index="1">00:00 / 01:30</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Track 3: Hold Me Close in the Hurricane -->
+                        <div class="sc-player track-player" data-track-index="2">
+                            <button class="sc-play-btn track-play-btn" data-track-index="2" aria-label="Play Hold Me Close in the Hurricane">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <div class="sc-player-body">
+                                <div class="sc-track-info">
+                                    <span class="sc-track-number">03</span>
+                                    <span class="sc-track-title font-heading text-white">HOLD ME CLOSE IN THE HURRICANE</span>
+                                </div>
+                                <div class="sc-waveform-container track-waveform" data-track-index="2">
+                                    <div class="sc-waveform-progress track-progress" data-track-index="2"></div>
+                                    <img src="assets/waveform_transparent.png" alt="Waveform" class="sc-waveform-img">
+                                </div>
+                                <div class="sc-meta">
+                                    <span class="sc-artist">SUGGESTIVE LINE</span>
+                                    <span class="sc-time track-time" data-track-index="2">00:00 / 01:30</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Track 4: I Want to Extend My Life -->
+                        <div class="sc-player track-player" data-track-index="3">
+                            <button class="sc-play-btn track-play-btn" data-track-index="3" aria-label="Play I Want to Extend My Life">
+                                <i class="fas fa-play"></i>
+                            </button>
+                            <div class="sc-player-body">
+                                <div class="sc-track-info">
+                                    <span class="sc-track-number">04</span>
+                                    <span class="sc-track-title font-heading text-white">I WANT TO EXTEND MY LIFE</span>
+                                </div>
+                                <div class="sc-waveform-container track-waveform" data-track-index="3">
+                                    <div class="sc-waveform-progress track-progress" data-track-index="3"></div>
+                                    <img src="assets/waveform_transparent.png" alt="Waveform" class="sc-waveform-img">
+                                </div>
+                                <div class="sc-meta">
+                                    <span class="sc-artist">SUGGESTIVE LINE</span>
+                                    <span class="sc-time track-time" data-track-index="3">00:00 / 01:30</span>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Monochrome Platforms Grid -->
-                        <div class="streaming-grid mt-4">
+                        <!-- Streaming Platform Buttons -->
+                        <div class="streaming-grid mt-4" id="streaming-buttons">
                             <a href="https://spotify.com" target="_blank" rel="noopener noreferrer" class="btn-stream" id="spotify-btn">
                                 <i class="fab fa-spotify"></i> SPOTIFY
                             </a>
@@ -299,7 +368,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     
     <!-- Custom JavaScript Interactions -->
-    <script src="script.js?v=3.0"></script>
+    <script src="script.js?v=4.0"></script>
     
     <!-- Audio-lyrics bridge script (Optional extra for lyrics canvas) -->
     <script>
