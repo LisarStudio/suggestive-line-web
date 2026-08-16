@@ -64,34 +64,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // 4. Parallax Scrolling on Hero
+    // 4. Subtle Hero Parallax
     const heroSection = document.getElementById("home");
-    const heroCharacter = document.querySelector(".hero-character-container");
-    const lightBeam = document.querySelector(".light-beam");
-    const heroLogoBox = document.getElementById("hero-logo-parallax-box");
+    const heroBandBg = document.querySelector(".hero-band-bg");
 
-    if (heroSection) {
+    if (heroSection && heroBandBg) {
         window.addEventListener("scroll", () => {
             const scrollPos = window.scrollY;
-            
-            // Character floats down slightly slower than scroll
-            if (heroCharacter) {
-                const speedChar = 0.08;
-                heroCharacter.style.transform = `translate(-50%, calc(-50% + ${scrollPos * speedChar}px))`;
+            if (scrollPos < window.innerHeight) {
+                heroBandBg.style.transform = `translate3d(0, ${scrollPos * 0.12}px, 0)`;
             }
-            
-            // Light beam drifts slightly in opposite direction
-            if (lightBeam) {
-                const speedBeam = -0.05;
-                lightBeam.style.transform = `translateX(calc(-50% + ${scrollPos * speedBeam}px))`;
-            }
-            
-            // Logo container floats down/up slightly
-            if (heroLogoBox) {
-                const speedLogo = 0.12;
-                heroLogoBox.style.transform = `translate(-50%, calc(-50% + ${scrollPos * speedLogo}px))`;
-            }
-        });
+        }, { passive: true });
     }
 
     // 5. Scroll Reveals for Lyrics
@@ -107,7 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (lineTop < triggerBottom) {
                 line.classList.add("visible");
             } else {
-                line.classList.remove("visible"); // Optional: removes to re-animate on scroll up
+                line.classList.remove("visible");
             }
         });
 
@@ -125,10 +108,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    window.addEventListener("scroll", revealOnScroll);
+    window.addEventListener("scroll", revealOnScroll, { passive: true });
     revealOnScroll(); // Initial check
 
-    // 6. Interactive Canvas Particle Engine (Rain & Debris)
+    // 6. Atmospheric Dust Particles Engine (Suspended Studio Dust in Light Beam)
     const canvas = document.getElementById("particles-canvas");
     if (canvas) {
         const ctx = canvas.getContext("2d");
@@ -143,65 +126,59 @@ document.addEventListener("DOMContentLoaded", () => {
         resizeCanvas();
         window.addEventListener("resize", resizeCanvas);
 
-        // Particle Class
-        class Particle {
-            constructor() {
-                this.reset();
-                this.y = Math.random() * canvas.height;
+        // Atmospheric Dust Particle
+        class AtmosphericDust {
+            constructor(initial = false) {
+                this.reset(initial);
             }
 
-            reset() {
+            reset(initial = false) {
                 this.x = Math.random() * canvas.width;
-                this.y = -20;
-                // Rain-like vertical drift + sideways debris float
-                this.size = Math.random() * 1.5 + 0.5;
-                this.speedY = Math.random() * 2.5 + 1.0;
-                this.speedX = Math.random() * 0.8 - 0.4;
-                this.opacity = Math.random() * 0.4 + 0.15;
-                this.type = Math.random() > 0.8 ? "debris" : "rain"; // rain or tiny floating ash
-                if (this.type === "debris") {
-                    this.size = Math.random() * 2.5 + 1.0;
-                    this.speedY = Math.random() * 0.5 + 0.2;
-                    this.speedX = Math.random() * 0.6 - 0.3;
-                }
+                this.y = initial ? Math.random() * canvas.height : canvas.height + 15;
+                // Very tiny dust size (0.5px to 1.8px)
+                this.size = Math.random() * 1.1 + 0.45;
+                // Extremely slow upward drift (18s - 45s cycle duration)
+                this.speedY = -(Math.random() * 0.22 + 0.06);
+                // Subtle horizontal drift & wave
+                this.driftSpeed = Math.random() * 0.18 + 0.04;
+                this.angle = Math.random() * Math.PI * 2;
+                this.angleSpeed = Math.random() * 0.006 + 0.002;
+                // Opacity variation
+                this.baseOpacity = Math.random() * 0.28 + 0.05;
+                this.opacity = this.baseOpacity;
+                this.pulseSpeed = Math.random() * 0.008 + 0.002;
+                this.pulse = Math.random() * Math.PI * 2;
             }
 
             update() {
                 this.y += this.speedY;
-                this.x += this.speedX;
+                this.angle += this.angleSpeed;
+                this.pulse += this.pulseSpeed;
+                this.x += Math.sin(this.angle) * this.driftSpeed;
+                
+                // Slow organic breathing of opacity
+                this.opacity = this.baseOpacity + Math.sin(this.pulse) * 0.06;
+                if (this.opacity < 0.02) this.opacity = 0.02;
 
-                // Add scroll-dependent lateral drift
-                this.x += window.scrollY * 0.0003 * (this.type === "debris" ? 1.5 : 0.5);
-
-                if (this.y > canvas.height || this.x < -20 || this.x > canvas.width + 20) {
-                    this.reset();
+                if (this.y < -20 || this.x < -20 || this.x > canvas.width + 20) {
+                    this.reset(false);
                 }
             }
 
             draw() {
                 ctx.beginPath();
-                ctx.fillStyle = `rgba(157, 199, 255, ${this.opacity})`;
-                if (this.type === "rain") {
-                    // Rain line
-                    ctx.strokeStyle = `rgba(157, 199, 255, ${this.opacity * 0.7})`;
-                    ctx.lineWidth = this.size / 2;
-                    ctx.moveTo(this.x, this.y);
-                    ctx.lineTo(this.x + this.speedX * 2, this.y + this.speedY * 4);
-                    ctx.stroke();
-                } else {
-                    // Ash/debris square or fuzzy dot
-                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
+                ctx.fillStyle = `rgba(228, 238, 250, ${this.opacity})`;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
             }
         }
 
-        // Initialize Particles
+        // Initialize Particles with realistic sparse distribution
         const initParticles = () => {
             particles = [];
-            const count = Math.min(100, Math.floor(canvas.width / 15));
+            const count = Math.min(55, Math.max(25, Math.floor(canvas.width / 28)));
             for (let i = 0; i < count; i++) {
-                particles.push(new Particle());
+                particles.push(new AtmosphericDust(true));
             }
         };
         initParticles();
@@ -221,7 +198,6 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!prefersReducedMotion) {
             animate();
         } else {
-            // Draw a few static particles
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             initParticles();
             particles.forEach(p => p.draw());
@@ -251,25 +227,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const lyricsSection = document.getElementById("lyrics");
     const lyricLinesAudio = document.querySelectorAll(".lyric-line");
     const ctaPlayBtn = document.getElementById("hero-play-btn");
-    const heroLogoMouseMove = document.getElementById("hero-logo-mouse-move");
-    const heroSectionEl = document.getElementById("home");
     
     let currentTrack = -1; // no track playing
-
-    // Mouse parallax on hero logo
-    if (heroSectionEl && heroLogoMouseMove) {
-        heroSectionEl.addEventListener("mousemove", (e) => {
-            const rect = heroSectionEl.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-            const moveX = (x / (rect.width / 2)) * 18;
-            const moveY = (y / (rect.height / 2)) * 12;
-            heroLogoMouseMove.style.transform = `translate(${moveX}px, ${moveY}px)`;
-        });
-        heroSectionEl.addEventListener("mouseleave", () => {
-            heroLogoMouseMove.style.transform = "translate(0px, 0px)";
-        });
-    }
 
     const formatTime = (secs) => {
         const m = Math.floor(secs / 60);

@@ -214,162 +214,169 @@ body::before {
 /* Hero Section */
 .hero-section {
     position: relative;
+    height: 100vh;
     height: 100svh;
     min-height: 700px;
+    width: 100%;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
     overflow: hidden;
-    padding-top: 80px;
+    padding: 0;
+    margin: 0;
+    background-color: var(--void);
 }
 
-/* Cold Overhead Beam Graphic via Gradients & Shadows */
-.light-beam {
+/* Background image filling full hero */
+.hero-bg-container {
     position: absolute;
     top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 120px;
+    left: 0;
+    width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, 
-        rgba(255, 255, 255, 0.45) 0%,
-        rgba(157, 199, 255, 0.15) 30%,
-        rgba(157, 199, 255, 0.03) 70%,
-        transparent 100%
-    );
-    filter: blur(25px);
-    pointer-events: none;
-    z-index: 2;
-    opacity: 0.85;
+    z-index: 1;
+    overflow: hidden;
 }
 
-.hero-content-wrapper {
+.hero-band-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+    display: block;
+    user-select: none;
+    pointer-events: none;
+    filter: contrast(1.03) brightness(0.98);
+}
+
+/* Subtle Cinematic Lighting & Vignette Overlay */
+.hero-vignette-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(
+        180deg,
+        rgba(2, 5, 8, 0.25) 0%,
+        rgba(2, 5, 8, 0.0) 25%,
+        rgba(2, 5, 8, 0.0) 65%,
+        rgba(2, 5, 8, 0.45) 100%
+    );
+}
+
+/* Atmospheric Dust Canvas */
+#particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}
+
+/* Minimalist Hero Actions (Centered in lower third without covering faces or SL sigil) */
+.hero-actions-wrapper {
     position: relative;
     z-index: 10;
-    text-align: center;
-    width: 100%;
-    max-width: 1200px;
-    padding: 0 15px;
-    height: 100%;
+    margin-bottom: 4.8rem;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding-bottom: 3.5rem;
-    padding-top: 4rem;
+    align-items: center;
+    justify-content: center;
 }
 
-.hero-character-container {
-    position: absolute;
-    top: 55%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 750px;
-    z-index: 2;
-    pointer-events: none;
-    opacity: 0.35;
-    mask-image: radial-gradient(ellipse 70% 80% at 50% 40%, black 30%, transparent 75%);
-    -webkit-mask-image: radial-gradient(ellipse 70% 80% at 50% 40%, black 30%, transparent 75%);
-}
-.hero-character-img {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    filter: brightness(0.7) contrast(1.15) saturate(0.6);
-    animation: slow-breath 8s ease-in-out infinite alternate;
-}
-
-@keyframes slow-breath {
-    0% {
-        transform: scale(1.0);
-        filter: brightness(0.65) contrast(1.1) saturate(0.5);
-    }
-    100% {
-        transform: scale(1.025);
-        filter: brightness(0.75) contrast(1.15) saturate(0.65);
-    }
-}
-
-.hero-title-area {
-    margin-top: auto;
-    z-index: 11;
-    padding-bottom: 2rem;
-}
-.hero-label {
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.4em;
-    color: var(--steel);
-}
-.hero-title {
-    font-size: clamp(2.5rem, 5vw, 4.5rem);
-    font-weight: 400;
-    line-height: 1.15;
-    margin-top: 0.5rem;
-    margin-bottom: 2rem;
-}
+/* Minimalist LISTEN NOW Button as specified */
 button.btn-sl {
     font-family: var(--font-ui);
 }
 .btn-sl {
     display: inline-block;
-    padding: 0.9rem 2.5rem;
-    font-size: 0.75rem;
+    padding: 0.8rem 2.4rem;
+    font-size: 0.72rem;
     font-weight: 500;
     text-transform: uppercase;
-    letter-spacing: 0.35em;
-    color: var(--bone-white);
-    background-color: transparent;
-    border: 1px solid var(--steel);
+    letter-spacing: 0.28em;
+    color: rgba(255, 255, 255, 0.92);
+    background: rgba(5, 8, 12, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.35);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     border-radius: 0;
     text-decoration: none !important;
     transition: var(--transition-medium);
     cursor: pointer;
     outline: none;
     position: relative;
-    overflow: hidden;
-}
-.btn-sl::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(157, 199, 255, 0.15), transparent);
-    transform: translateX(-100%);
-    transition: var(--transition-medium);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
 }
 .btn-sl:hover, .btn-sl:focus {
-    color: var(--bone-white);
-    border-color: var(--spectral-blue);
-    box-shadow: 0 0 15px var(--spectral-blue-glow);
-    text-shadow: 0 0 8px rgba(157, 199, 255, 0.6);
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 0 20px rgba(157, 199, 255, 0.3);
+    transform: translateY(-2px);
 }
-.btn-sl:hover::before {
-    transform: translateX(100%);
+.btn-sl.playing {
+    border-color: var(--spectral-blue);
+    background: rgba(157, 199, 255, 0.12);
+    color: #ffffff;
+    box-shadow: 0 0 20px var(--spectral-blue-glow);
 }
 
 /* Scroll Indicator */
 .hero-scroll-indicator {
     position: absolute;
-    bottom: 2rem;
+    bottom: 1.5rem;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     text-transform: uppercase;
-    letter-spacing: 0.5em;
-    writing-mode: vertical-rl;
-    color: var(--steel);
+    letter-spacing: 0.45em;
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none !important;
     z-index: 10;
-    animation: indicator-bounce 2s infinite ease-in-out;
+    animation: indicator-bounce 2.5s infinite ease-in-out;
+    transition: color 0.3s ease;
+}
+.hero-scroll-indicator:hover {
+    color: rgba(255, 255, 255, 0.9);
 }
 @keyframes indicator-bounce {
     0%, 100% {
         transform: translate(-50%, 0);
     }
     50% {
-        transform: translate(-50%, 8px);
+        transform: translate(-50%, 6px);
+    }
+}
+
+/* Responsive Hero Adjustments */
+@media (max-width: 991px) {
+    .hero-band-bg {
+        object-position: center center;
+    }
+    .hero-actions-wrapper {
+        margin-bottom: 4.2rem;
+    }
+}
+@media (max-width: 576px) {
+    .hero-section {
+        min-height: 600px;
+    }
+    .hero-band-bg {
+        object-position: 50% 25%;
+    }
+    .hero-actions-wrapper {
+        margin-bottom: 3.5rem;
+    }
+    .btn-sl {
+        padding: 0.7rem 1.8rem;
+        font-size: 0.68rem;
+        letter-spacing: 0.22em;
     }
 }
 
@@ -1010,62 +1017,7 @@ button.btn-sl {
     font-family: var(--font-ui);
 }
 
-/* Glowing Logo & Parallax in Hero */
-.hero-logo-container {
-    position: absolute;
-    top: 35%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 6;
-    width: 100%;
-    max-width: 380px;
-    display: flex;
-    justify-content: center;
-    pointer-events: none;
-    transition: transform 0.1s ease-out;
-}
-.hero-logo-mouse-move {
-    width: 100%;
-    height: auto;
-    display: flex;
-    justify-content: center;
-    transition: transform 0.15s ease-out;
-}
-.hero-logo-glowing {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 0 20px rgba(157, 199, 255, 0.5)) brightness(1.05);
-    animation: logo-spectral-pulse 5s ease-in-out infinite alternate, logo-glitch-subtle 12s infinite;
-}
-@keyframes logo-spectral-pulse {
-    0% {
-        filter: drop-shadow(0 0 10px rgba(157, 199, 255, 0.3)) brightness(0.95);
-    }
-    100% {
-        filter: drop-shadow(0 0 35px rgba(157, 199, 255, 0.7)) brightness(1.12);
-    }
-}
-@keyframes logo-glitch-subtle {
-    0%, 93%, 100% {
-        transform: translate(0, 0) skew(0deg);
-    }
-    94% {
-        transform: translate(-3px, 1px) skew(-0.5deg);
-        filter: drop-shadow(0 0 20px rgba(157, 199, 255, 0.8)) brightness(1.2) hue-rotate(15deg);
-    }
-    95% {
-        transform: translate(3px, -1px) skew(0.8deg);
-        filter: drop-shadow(0 0 25px rgba(200, 220, 255, 0.9)) brightness(1.3) hue-rotate(-20deg);
-    }
-    96% {
-        transform: translate(-1px, 0) skew(0deg);
-        filter: drop-shadow(0 0 15px rgba(157, 199, 255, 0.5)) brightness(1.0);
-    }
-    97% {
-        transform: translate(0, 0) skew(0deg);
-    }
-}
+
 
 /* Lyrics Highlight Synchronization Classes */
 #lyrics-sync-container {

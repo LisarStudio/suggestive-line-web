@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom Style Sheet -->
-    <link rel="stylesheet" href="style.css?v=4.0">
+    <link rel="stylesheet" href="style.css?v=5.0">
 </head>
 <body>
 
@@ -49,45 +49,28 @@
 
     <!-- 02 HOMEPAGE HERO SECTION -->
     <section id="home" class="hero-section">
-        <!-- Cold Overhead Vertical Beam -->
-        <div class="light-beam"></div>
+        <!-- Cinematic Band Photographic Background -->
+        <div class="hero-bg-container">
+            <img src="assets/hero_band.jpg" alt="Suggestive Line" class="hero-band-bg">
+        </div>
         
-        <!-- Particle & Rain Canvas Background -->
+        <!-- Subtle Atmospheric Vignette Overlay -->
+        <div class="hero-vignette-overlay"></div>
+        
+        <!-- Atmospheric Dust Particles Canvas -->
         <canvas id="particles-canvas"></canvas>
         
-        <!-- Humanoid Seated Figure Background -->
-        <div class="hero-character-container">
-            <img src="assets/hero_character.png" alt="Seated Humanoid Entity in Shadow" class="hero-character-img">
+        <!-- Minimalist Hero Action Area -->
+        <div class="hero-actions-wrapper">
+            <button type="button" class="btn-sl hero-listen-btn" id="hero-play-btn" aria-label="Listen to Single">
+                LISTEN NOW <i class="fas fa-play ml-2"></i>
+            </button>
         </div>
         
-        <!-- Floating large logo in Hero -->
-        <div class="hero-logo-container" id="hero-logo-parallax-box">
-            <div class="hero-logo-mouse-move" id="hero-logo-mouse-move">
-                <img src="assets/logo_transparent.png" alt="Suggestive Line Sigil" class="hero-logo-glowing">
-            </div>
-        </div>
-        
-        <!-- Hidden Audio element -->
-        <audio id="main-audio" preload="auto">
-            <source src="assets/audio.mp3" type="audio/mpeg">
-        </audio>
-        
-        <!-- Hero Foreground Content -->
-        <div class="hero-content-wrapper text-spaced">
-            <div class="hero-brand-top"></div>
-            
-            <div class="hero-title-area">
-                <h1 class="hero-title font-heading text-white">
-                    HOLD ME CLOSE<br>IN THE HURRICANE
-                </h1>
-                <button type="button" class="btn-sl" id="hero-play-btn">
-                    LISTEN NOW <i class="fas fa-play ml-2"></i>
-                </button>
-            </div>
-        </div>
-        
-        <!-- Vertical Scroll Indicator -->
-        <div class="hero-scroll-indicator">SCROLL</div>
+        <!-- Minimalist Vertical Scroll Indicator -->
+        <a href="#music" class="hero-scroll-indicator" aria-label="Scroll to Music">
+            <span>SCROLL</span>
+        </a>
     </section>
 
     <!-- 03 MUSIC / TRACKLIST SECTION -->
@@ -368,7 +351,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     
     <!-- Custom JavaScript Interactions -->
-    <script src="script.js?v=4.0"></script>
+    <script src="script.js?v=5.0"></script>
     
     <!-- Audio-lyrics bridge script (Optional extra for lyrics canvas) -->
     <script>
