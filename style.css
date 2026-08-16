@@ -238,6 +238,12 @@ body::before {
     overflow: hidden;
 }
 
+.hero-picture {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
 .hero-band-bg {
     width: 100%;
     height: 100%;
@@ -247,6 +253,17 @@ body::before {
     user-select: none;
     pointer-events: none;
     filter: contrast(1.03) brightness(0.98);
+}
+
+/* Mobile Center Editorial Header */
+.sl-nav-center-brand {
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.35em;
+    color: rgba(244, 247, 250, 0.7);
+    text-transform: uppercase;
+    pointer-events: none;
+    user-select: none;
 }
 
 /* Subtle Cinematic Lighting & Vignette Overlay */
@@ -356,27 +373,78 @@ button.btn-sl {
 
 /* Responsive Hero Adjustments */
 @media (max-width: 991px) {
-    .hero-band-bg {
-        object-position: center center;
+    .sl-navbar {
+        padding: calc(1rem + env(safe-area-inset-top, 0px)) 1.5rem 1rem 1.5rem;
     }
     .hero-actions-wrapper {
         margin-bottom: 4.2rem;
     }
 }
-@media (max-width: 576px) {
+
+@media (max-width: 768px), (orientation: portrait) and (max-width: 1024px) {
     .hero-section {
-        min-height: 600px;
+        min-height: 100vh;
+        min-height: 100svh;
+        height: 100svh;
+        padding-top: env(safe-area-inset-top, 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
     }
+    
     .hero-band-bg {
-        object-position: 50% 25%;
+        object-fit: cover;
+        object-position: center center;
+    }
+    
+    .hero-actions-wrapper {
+        margin-bottom: calc(4.2rem + env(safe-area-inset-bottom, 0px));
+        width: 100%;
+        padding: 0 1.5rem;
+    }
+    
+    .btn-sl.hero-listen-btn {
+        min-height: 48px;
+        min-width: 200px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.75rem 2rem;
+        font-size: 0.72rem;
+        letter-spacing: 0.28em;
+        background: rgba(4, 7, 11, 0.45);
+        border: 1px solid rgba(255, 255, 255, 0.45);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+    }
+    
+    .hero-scroll-indicator {
+        bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px));
+        font-size: 0.52rem;
+        letter-spacing: 0.45em;
+    }
+}
+
+@media (max-width: 480px) {
+    .sl-navbar {
+        padding: calc(0.8rem + env(safe-area-inset-top, 0px)) 1.2rem 0.8rem 1.2rem;
+    }
+    .sl-navbar .navbar-brand img {
+        height: 28px;
+    }
+    .sl-nav-center-brand {
+        font-size: 0.58rem;
+        letter-spacing: 0.28em;
+    }
+    .sl-menu-toggle {
+        font-size: 1.25rem;
+    }
+    .btn-sl.hero-listen-btn {
+        min-height: 48px;
+        min-width: 190px;
+        font-size: 0.7rem;
+        letter-spacing: 0.26em;
     }
     .hero-actions-wrapper {
-        margin-bottom: 3.5rem;
-    }
-    .btn-sl {
-        padding: 0.7rem 1.8rem;
-        font-size: 0.68rem;
-        letter-spacing: 0.22em;
+        margin-bottom: calc(3.6rem + env(safe-area-inset-bottom, 0px));
     }
 }
 
