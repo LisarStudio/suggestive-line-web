@@ -389,8 +389,8 @@ body::before {
 
 /* Central Glowing Isotype */
 .hero-main-logo-container {
-    width: clamp(170px, 17vw, 290px);
-    max-width: 290px;
+    width: clamp(90px, 9.5vw, 130px);
+    max-width: 130px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -538,7 +538,8 @@ button.btn-sl {
     }
     
     .hero-main-logo-container {
-        width: clamp(125px, 34vw, 175px);
+        width: clamp(75px, 20vw, 100px);
+        max-width: 100px;
         margin-bottom: 0.6rem;
     }
     
