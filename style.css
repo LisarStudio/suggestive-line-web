@@ -219,7 +219,7 @@ body::before {
     min-height: 700px;
     width: 100%;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     overflow: hidden;
     padding: 0;
@@ -227,7 +227,7 @@ body::before {
     background-color: var(--void);
 }
 
-/* Background image filling full hero */
+/* 1. Background image layer */
 .hero-bg-container {
     position: absolute;
     top: 0;
@@ -255,7 +255,7 @@ body::before {
     filter: contrast(1.03) brightness(0.98);
 }
 
-/* Mobile Center Editorial Header */
+/* Mobile Center Editorial Header in Navbar */
 .sl-nav-center-brand {
     font-size: 0.65rem;
     font-weight: 500;
@@ -266,7 +266,7 @@ body::before {
     user-select: none;
 }
 
-/* Subtle Cinematic Lighting & Vignette Overlay */
+/* 2. Subtle Cinematic Lighting & Vignette Overlay */
 .hero-vignette-overlay {
     position: absolute;
     top: 0;
@@ -277,14 +277,14 @@ body::before {
     pointer-events: none;
     background: linear-gradient(
         180deg,
-        rgba(2, 5, 8, 0.25) 0%,
+        rgba(2, 5, 8, 0.35) 0%,
         rgba(2, 5, 8, 0.0) 25%,
         rgba(2, 5, 8, 0.0) 65%,
-        rgba(2, 5, 8, 0.45) 100%
+        rgba(2, 5, 8, 0.5) 100%
     );
 }
 
-/* Atmospheric Dust Canvas */
+/* 3. Atmospheric Dust Canvas */
 #particles-canvas {
     position: absolute;
     top: 0;
@@ -295,89 +295,231 @@ body::before {
     z-index: 3;
 }
 
-/* Minimalist Hero Actions (Centered in lower third without covering faces or SL sigil) */
-.hero-actions-wrapper {
+/* 4. Editorial Frame Decorations (Pure Code / CSS) */
+.hero-frame-decorations {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 4;
+    overflow: hidden;
+}
+
+.hero-frame-line {
+    position: absolute;
+    top: 15%;
+    bottom: 12%;
+    width: 1px;
+    background: linear-gradient(
+        180deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.22) 15%,
+        rgba(255, 255, 255, 0.35) 50%,
+        rgba(255, 255, 255, 0.22) 85%,
+        transparent 100%
+    );
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.hero-frame-left {
+    left: 28px;
+}
+.hero-frame-right {
+    right: 28px;
+}
+
+.hero-frame-marker {
+    width: 5px;
+    height: 5px;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    transform: rotate(45deg);
+    background: var(--void);
+}
+.hero-frame-sigil {
+    width: 16px;
+    height: auto;
+    opacity: 0.5;
+    filter: drop-shadow(0 0 4px rgba(157, 199, 255, 0.35));
+}
+.frame-mini-logo {
+    width: 14px;
+    height: auto;
+    display: block;
+}
+
+.hero-top-editorial-left {
+    position: absolute;
+    top: 24px;
+    left: 85px;
+    font-family: var(--font-ui);
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    color: rgba(220, 230, 245, 0.55);
+    text-transform: uppercase;
+}
+.hero-top-editorial-right {
+    position: absolute;
+    top: 24px;
+    right: 85px;
+    font-family: var(--font-ui);
+    font-size: 0.62rem;
+    letter-spacing: 0.35em;
+    color: rgba(220, 230, 245, 0.55);
+    text-transform: uppercase;
+}
+
+/* 5. Central UI Content Layer */
+.hero-content-layer {
     position: relative;
     z-index: 10;
-    margin-bottom: 4.8rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align: center;
+    width: 100%;
+    max-width: 900px;
+    padding: 0 1.5rem;
+    margin-top: 14vh;
 }
 
-/* Minimalist LISTEN NOW Button as specified */
+/* Central Glowing Isotype */
+.hero-main-logo-container {
+    width: clamp(170px, 17vw, 290px);
+    max-width: 290px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.8rem;
+    transition: transform 0.3s ease;
+}
+
+.hero-main-logo {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: 
+        drop-shadow(0 0 4px rgba(255, 255, 255, 0.95))
+        drop-shadow(0 0 14px rgba(190, 215, 255, 0.55))
+        drop-shadow(0 0 32px rgba(140, 180, 220, 0.3));
+    animation: logo-aura-breathe 6s ease-in-out infinite alternate;
+}
+
+@keyframes logo-aura-breathe {
+    0% {
+        filter: 
+            drop-shadow(0 0 3px rgba(255, 255, 255, 0.85))
+            drop-shadow(0 0 12px rgba(190, 215, 255, 0.45))
+            drop-shadow(0 0 26px rgba(140, 180, 220, 0.25));
+    }
+    100% {
+        filter: 
+            drop-shadow(0 0 5px rgba(255, 255, 255, 1.0))
+            drop-shadow(0 0 18px rgba(200, 225, 255, 0.7))
+            drop-shadow(0 0 40px rgba(160, 200, 245, 0.45));
+    }
+}
+
+/* Tagline */
+.hero-tagline {
+    font-family: var(--font-ui);
+    font-size: clamp(0.55rem, 1.0vw, 0.72rem);
+    letter-spacing: 0.4em;
+    color: rgba(225, 235, 248, 0.85);
+    text-transform: uppercase;
+    margin: 0.4rem 0 1.6rem 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.9);
+}
+
+/* Button Container */
+.hero-btn-container {
+    margin-bottom: 1.8rem;
+}
+
+/* Minimalist LISTEN NOW Button */
 button.btn-sl {
     font-family: var(--font-ui);
 }
 .btn-sl {
-    display: inline-block;
-    padding: 0.8rem 2.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem 2.6rem;
     font-size: 0.72rem;
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.28em;
-    color: rgba(255, 255, 255, 0.92);
-    background: rgba(5, 8, 12, 0.25);
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    color: rgba(255, 255, 255, 0.95);
+    background: rgba(5, 8, 12, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border-radius: 0;
     text-decoration: none !important;
     transition: var(--transition-medium);
     cursor: pointer;
     outline: none;
     position: relative;
-    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.6);
 }
 .btn-sl:hover, .btn-sl:focus {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.75);
-    box-shadow: 0 0 20px rgba(157, 199, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 0 25px rgba(157, 199, 255, 0.35);
     transform: translateY(-2px);
 }
 .btn-sl.playing {
     border-color: var(--spectral-blue);
-    background: rgba(157, 199, 255, 0.12);
+    background: rgba(157, 199, 255, 0.15);
     color: #ffffff;
-    box-shadow: 0 0 20px var(--spectral-blue-glow);
+    box-shadow: 0 0 25px var(--spectral-blue-glow);
 }
 
-/* Scroll Indicator */
+/* Code-Rendered Scroll Indicator */
 .hero-scroll-indicator {
-    position: absolute;
-    bottom: 1.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 0.55rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none !important;
+    color: rgba(255, 255, 255, 0.45);
+    transition: color 0.3s ease;
+    cursor: pointer;
+}
+.hero-scroll-indicator .scroll-text {
+    font-size: 0.52rem;
     text-transform: uppercase;
     letter-spacing: 0.45em;
-    color: rgba(255, 255, 255, 0.4);
-    text-decoration: none !important;
-    z-index: 10;
-    animation: indicator-bounce 2.5s infinite ease-in-out;
-    transition: color 0.3s ease;
+    margin-bottom: 6px;
+}
+.hero-scroll-indicator .scroll-line {
+    width: 1px;
+    height: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.15));
+}
+.hero-scroll-indicator .scroll-diamond {
+    width: 4px;
+    height: 4px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    transform: rotate(45deg);
+    margin-top: 2px;
 }
 .hero-scroll-indicator:hover {
-    color: rgba(255, 255, 255, 0.9);
+    color: rgba(255, 255, 255, 0.95);
 }
-@keyframes indicator-bounce {
-    0%, 100% {
-        transform: translate(-50%, 0);
-    }
-    50% {
-        transform: translate(-50%, 6px);
-    }
+.hero-scroll-indicator:hover .scroll-diamond {
+    border-color: var(--spectral-blue);
+    box-shadow: 0 0 6px var(--spectral-blue-glow);
 }
 
-/* Responsive Hero Adjustments */
+/* Mobile & Tablet Portrait Adjustments */
 @media (max-width: 991px) {
     .sl-navbar {
         padding: calc(1rem + env(safe-area-inset-top, 0px)) 1.5rem 1rem 1.5rem;
-    }
-    .hero-actions-wrapper {
-        margin-bottom: 4.2rem;
     }
 }
 
@@ -390,36 +532,35 @@ button.btn-sl {
         padding-bottom: env(safe-area-inset-bottom, 0px);
     }
     
-    .hero-band-bg {
-        object-fit: cover;
-        object-position: center center;
+    .hero-content-layer {
+        margin-top: 22vh;
+        padding: 0 1rem;
     }
     
-    .hero-actions-wrapper {
-        margin-bottom: calc(4.2rem + env(safe-area-inset-bottom, 0px));
-        width: 100%;
-        padding: 0 1.5rem;
+    .hero-main-logo-container {
+        width: clamp(125px, 34vw, 175px);
+        margin-bottom: 0.6rem;
+    }
+    
+    .hero-tagline {
+        font-size: 0.55rem;
+        letter-spacing: 0.28em;
+        margin: 0.4rem 0 1.4rem 0;
     }
     
     .btn-sl.hero-listen-btn {
         min-height: 48px;
         min-width: 200px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.75rem 2rem;
         font-size: 0.72rem;
         letter-spacing: 0.28em;
-        background: rgba(4, 7, 11, 0.45);
-        border: 1px solid rgba(255, 255, 255, 0.45);
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+        padding: 0.75rem 2rem;
     }
     
-    .hero-scroll-indicator {
-        bottom: calc(1.2rem + env(safe-area-inset-bottom, 0px));
-        font-size: 0.52rem;
-        letter-spacing: 0.45em;
+    .hero-frame-left {
+        left: 12px;
+    }
+    .hero-frame-right {
+        right: 12px;
     }
 }
 
@@ -442,9 +583,6 @@ button.btn-sl {
         min-width: 190px;
         font-size: 0.7rem;
         letter-spacing: 0.26em;
-    }
-    .hero-actions-wrapper {
-        margin-bottom: calc(3.6rem + env(safe-area-inset-bottom, 0px));
     }
 }
 

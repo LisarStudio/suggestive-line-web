@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Custom Style Sheet -->
-    <link rel="stylesheet" href="style.css?v=7.0">
+    <link rel="stylesheet" href="style.css?v=8.0">
 </head>
 <body>
 
@@ -54,32 +54,61 @@
 
     <!-- 02 HOMEPAGE HERO SECTION -->
     <section id="home" class="hero-section">
-        <!-- Cinematic Band Photographic Background (Desktop + Mobile Specific Assets) -->
+        <!-- 1. Background Layer: Pure Band Photography without UI elements -->
         <div class="hero-bg-container">
             <picture class="hero-picture">
-                <source media="(max-width: 768px)" srcset="assets/hero_band_mobile.png?v=7.0">
-                <source media="(orientation: portrait) and (max-width: 1024px)" srcset="assets/hero_band_mobile.png?v=7.0">
-                <img src="assets/hero_band.jpg?v=7.0" alt="Suggestive Line" class="hero-band-bg">
+                <source media="(max-width: 768px)" srcset="assets/hero_band_mobile.png?v=8.0">
+                <source media="(orientation: portrait) and (max-width: 1024px)" srcset="assets/hero_band_mobile.png?v=8.0">
+                <img src="assets/hero_band.jpg?v=8.0" alt="Suggestive Line Band" class="hero-band-bg">
             </picture>
         </div>
         
-        <!-- Subtle Atmospheric Vignette Overlay -->
+        <!-- 2. Dark Cinematic Lighting & Vignette Overlay -->
         <div class="hero-vignette-overlay"></div>
         
-        <!-- Atmospheric Dust Particles Canvas -->
+        <!-- 3. Atmospheric Dust Particles Canvas -->
         <canvas id="particles-canvas"></canvas>
         
-        <!-- Minimalist Hero Action Area -->
-        <div class="hero-actions-wrapper">
-            <button type="button" class="btn-sl hero-listen-btn" id="hero-play-btn" aria-label="Listen to Single">
-                LISTEN NOW <i class="fas fa-play ml-2"></i>
-            </button>
+        <!-- 4. Subtle Editorial Frame Decorations (Pure Code / CSS) -->
+        <div class="hero-frame-decorations" aria-hidden="true">
+            <div class="hero-frame-line hero-frame-left">
+                <span class="hero-frame-marker top"></span>
+                <span class="hero-frame-sigil center"><img src="assets/logo_transparent.png" alt="" class="frame-mini-logo"></span>
+                <span class="hero-frame-marker bottom"></span>
+            </div>
+            <div class="hero-frame-line hero-frame-right">
+                <span class="hero-frame-marker top"></span>
+                <span class="hero-frame-sigil center"><img src="assets/logo_transparent.png" alt="" class="frame-mini-logo"></span>
+                <span class="hero-frame-marker bottom"></span>
+            </div>
+            <div class="hero-top-editorial-left d-none d-md-block">··· SUGGESTIVE LINE</div>
+            <div class="hero-top-editorial-right d-none d-md-block">-- EST. 2024 --</div>
         </div>
         
-        <!-- Minimalist Vertical Scroll Indicator -->
-        <a href="#music" class="hero-scroll-indicator" aria-label="Scroll to Music">
-            <span>SCROLL</span>
-        </a>
+        <!-- 5. Interactive Central UI Content Layer (Logo, Tagline, Button, Scroll) -->
+        <div class="hero-content-layer">
+            <!-- Central Glowing SL Sigil Logo -->
+            <div class="hero-main-logo-container">
+                <img src="assets/logo_transparent.png" alt="Suggestive Line Sigil" class="hero-main-logo">
+            </div>
+            
+            <!-- Band Tagline -->
+            <p class="hero-tagline">· ALTERNATIVE · ELECTRIC · UNFILTERED ·</p>
+            
+            <!-- Single Interactive LISTEN NOW Button -->
+            <div class="hero-btn-container">
+                <button type="button" class="btn-sl hero-listen-btn" id="hero-play-btn" aria-label="Listen to Single">
+                    LISTEN NOW <i class="fas fa-play ml-2"></i>
+                </button>
+            </div>
+            
+            <!-- Interactive Scroll Indicator -->
+            <a href="#music" class="hero-scroll-indicator" aria-label="Scroll to music section">
+                <span class="scroll-text">SCROLL</span>
+                <span class="scroll-line"></span>
+                <span class="scroll-diamond"></span>
+            </a>
+        </div>
     </section>
 
     <!-- 03 MUSIC / TRACKLIST SECTION -->
@@ -360,7 +389,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct" crossorigin="anonymous"></script>
     
     <!-- Custom JavaScript Interactions -->
-    <script src="script.js?v=7.0"></script>
+    <script src="script.js?v=8.0"></script>
     
     <!-- Audio-lyrics bridge script (Optional extra for lyrics canvas) -->
     <script>
