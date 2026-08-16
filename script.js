@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 7. Interactive Audio Player (SoundCloud-like Sync, 30s Limit, Lyrics Sync)
     const audio = document.getElementById("main-audio");
-    const maxPreviewDuration = 30; // 30s preview limit
+    const maxPreviewDuration = 30;
 
     const ctaPlayBtn = document.getElementById("hero-play-btn");
     const musicPlayBtn = document.getElementById("sc-music-play-btn");
@@ -239,123 +239,103 @@ document.addEventListener("DOMContentLoaded", () => {
     const musicTime = document.getElementById("sc-music-time");
     
     const lyricsSection = document.getElementById("lyrics");
-    const lyricLines = document.querySelectorAll(".lyric-line");
+    const lyricLinesAudio = document.querySelectorAll(".lyric-line");
     
-    const heroSection = document.getElementById("home");
     const heroLogoMouseMove = document.getElementById("hero-logo-mouse-move");
+    const heroSectionEl = document.getElementById("home");
 
-    // Log audio loading errors for debugging
+    // Log audio loading errors
     if (audio) {
         audio.addEventListener("error", (e) => {
-            console.error("Audio error event: ", e);
-            if (musicTime) {
-                musicTime.textContent = "Error loading single";
-            }
+            console.error("Audio load error:", e);
+        });
+        
+        audio.addEventListener("canplaythrough", () => {
+            console.log("Audio ready to play through.");
         });
     }
 
     // Interactive mousemove logo parallax
-    if (heroSection && heroLogoMouseMove) {
-        heroSection.addEventListener("mousemove", (e) => {
-            const rect = heroSection.getBoundingClientRect();
-            // Mouse position relative to center of hero section
+    if (heroSectionEl && heroLogoMouseMove) {
+        heroSectionEl.addEventListener("mousemove", (e) => {
+            const rect = heroSectionEl.getBoundingClientRect();
             const x = e.clientX - rect.left - rect.width / 2;
             const y = e.clientY - rect.top - rect.height / 2;
-            
-            // Subtle 20px maximum travel
-            const moveX = (x / (rect.width / 2)) * 15;
-            const moveY = (y / (rect.height / 2)) * 15;
-            
+            const moveX = (x / (rect.width / 2)) * 18;
+            const moveY = (y / (rect.height / 2)) * 12;
             heroLogoMouseMove.style.transform = `translate(${moveX}px, ${moveY}px)`;
         });
         
-        heroSection.addEventListener("mouseleave", () => {
+        heroSectionEl.addEventListener("mouseleave", () => {
             heroLogoMouseMove.style.transform = "translate(0px, 0px)";
         });
     }
 
-    // Sync UI play/pause states across all buttons and classes
+    // Sync UI play/pause states
     const updatePlayerUI = () => {
+        if (!audio) return;
         const isPlaying = !audio.paused;
         
-        // Hero Listen Now button
         if (ctaPlayBtn) {
-            if (isPlaying) {
-                ctaPlayBtn.innerHTML = 'PAUSE SINGLE <i class="fas fa-pause ml-2"></i>';
-                ctaPlayBtn.classList.add("playing");
-            } else {
-                ctaPlayBtn.innerHTML = 'LISTEN NOW <i class="fas fa-play ml-2"></i>';
-                ctaPlayBtn.classList.remove("playing");
-            }
+            ctaPlayBtn.innerHTML = isPlaying
+                ? 'PAUSE <i class="fas fa-pause ml-2"></i>'
+                : 'LISTEN NOW <i class="fas fa-play ml-2"></i>';
+            ctaPlayBtn.classList.toggle("playing", isPlaying);
         }
         
-        // Music section SoundCloud-like play button
         if (musicPlayBtn) {
-            if (isPlaying) {
-                musicPlayBtn.innerHTML = '<i class="fas fa-pause"></i>';
-                musicPlayBtn.classList.add("playing");
-            } else {
-                musicPlayBtn.innerHTML = '<i class="fas fa-play"></i>';
-                musicPlayBtn.classList.remove("playing");
-            }
+            musicPlayBtn.innerHTML = isPlaying
+                ? '<i class="fas fa-pause"></i>'
+                : '<i class="fas fa-play"></i>';
+            musicPlayBtn.classList.toggle("playing", isPlaying);
         }
         
-        // Set lyrics container highlight active status
         if (lyricsSection) {
-            if (isPlaying) {
-                lyricsSection.classList.add("playing-mode");
-            } else {
-                lyricsSection.classList.remove("playing-mode");
-            }
+            lyricsSection.classList.toggle("playing-mode", isPlaying);
         }
     };
 
     const togglePlayback = () => {
-        console.log("togglePlayback triggered. audio object:", audio);
         if (!audio) {
-            console.error("Audio element not found in DOM!");
+            console.error("No audio element found");
             return;
         }
         
         if (audio.paused) {
-            console.log("Audio is currently paused. Triggering play()...");
-            audio.play().then(() => {
-                console.log("Audio playback started successfully.");
-                updatePlayerUI();
-            }).catch(err => {
-                console.error("Playback failed or blocked by browser autoplay policy:", err);
-                // Safe fallback attempt
-                console.log("Retrying fallback audio playback...");
-                audio.play().then(() => {
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
                     updatePlayerUI();
-                }).catch(retryErr => {
-                    console.error("Playback fallback retry failed:", retryErr);
+                }).catch(err => {
+                    console.error("Playback error:", err);
                 });
-            });
+            }
         } else {
-            console.log("Audio is currently playing. Triggering pause()...");
             audio.pause();
             updatePlayerUI();
         }
     };
 
-    // Bind event listeners to both play buttons
+    // Bind LISTEN NOW button (now a <button> element)
     if (ctaPlayBtn) {
         ctaPlayBtn.addEventListener("click", (e) => {
             e.preventDefault();
+            e.stopPropagation();
             togglePlayback();
         });
     }
 
+    // Bind SoundCloud play button
     if (musicPlayBtn) {
         musicPlayBtn.addEventListener("click", (e) => {
             e.preventDefault();
+            e.stopPropagation();
             togglePlayback();
         });
     }
 
     // Track audio timeupdate
-    audio.addEventListener("timeupdate", () => {
+    audio && audio.addEventListener("timeupdate", () => {
         let current = audio.currentTime;
         
         // Enforce 30s preview limit
@@ -366,51 +346,42 @@ document.addEventListener("DOMContentLoaded", () => {
             updatePlayerUI();
         }
         
-        // Calculate progress percentage of the 30s limit
         const pct = (current / maxPreviewDuration) * 100;
         
-        // Update waveform progress overlay
         if (musicProgress) {
             musicProgress.style.width = `${pct}%`;
         }
         
-        // Update player time display (00:05 / 00:30)
         const formatSecs = (val) => String(Math.floor(val)).padStart(2, '0');
         if (musicTime) {
             musicTime.textContent = `00:${formatSecs(current)} / 00:${formatSecs(maxPreviewDuration)}`;
         }
         
-        // Sync lyric line highlighting based on timestamp
+        // Sync lyric line highlighting
         if (!audio.paused) {
             let activeLine = null;
-            lyricLines.forEach(line => {
+            lyricLinesAudio.forEach(line => {
                 const lineTime = parseFloat(line.getAttribute("data-time"));
                 if (current >= lineTime) {
                     activeLine = line;
                 }
             });
             
-            lyricLines.forEach(line => {
-                if (line === activeLine) {
-                    line.classList.add("active-sync");
-                } else {
-                    line.classList.remove("active-sync");
-                }
+            lyricLinesAudio.forEach(line => {
+                line.classList.toggle("active-sync", line === activeLine);
             });
         } else {
-            // Remove highlighting when paused
-            lyricLines.forEach(line => line.classList.remove("active-sync"));
+            lyricLinesAudio.forEach(line => line.classList.remove("active-sync"));
         }
     });
 
-    // Handle clicks directly on the waveform to scrub (limited to 30s range)
+    // Waveform scrubbing
     if (musicWaveform) {
         musicWaveform.addEventListener("click", (e) => {
+            if (!audio) return;
             const rect = musicWaveform.getBoundingClientRect();
             const clickX = e.clientX - rect.left;
-            const clickWidth = rect.width;
-            const pct = clickX / clickWidth;
-            
+            const pct = clickX / rect.width;
             audio.currentTime = pct * maxPreviewDuration;
             if (audio.paused) {
                 audio.play().then(updatePlayerUI);
