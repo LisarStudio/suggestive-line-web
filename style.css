@@ -385,6 +385,7 @@ body::before {
     max-width: 900px;
     padding: 0 1.5rem;
     margin-top: 14vh;
+    top: clamp(24px, 4vh, 40px);
 }
 
 /* Central Glowing Isotype */
@@ -534,6 +535,7 @@ button.btn-sl {
     
     .hero-content-layer {
         margin-top: 22vh;
+        top: clamp(12px, 2vh, 20px);
         padding: 0 1rem;
     }
     
