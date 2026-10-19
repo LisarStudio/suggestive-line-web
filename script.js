@@ -204,8 +204,8 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // 7. Multi-Track Audio Player (4 tracks, 1:30 limit, streaming glow)
-    const TRACK_COUNT = 4;
+    // 7. Multi-Track Audio Player (5 tracks, 1:30 limit, streaming glow)
+    const TRACK_COUNT = 5;
     const MAX_PREVIEW = 90; // 1:30 in seconds
     const trackAudios = [];
     const trackPlayBtns = [];
@@ -282,11 +282,11 @@ document.addEventListener("DOMContentLoaded", () => {
             trackPlayBtns[index].innerHTML = '<i class="fas fa-play"></i>';
             trackPlayBtns[index].classList.remove("playing");
             trackPlayers[index].classList.remove("track-active");
-            if (ctaPlayBtn && index === 2) {
+            if (ctaPlayBtn && index === 0) {
                 ctaPlayBtn.innerHTML = 'LISTEN NOW <i class="fas fa-play ml-2"></i>';
                 ctaPlayBtn.classList.remove("playing");
             }
-            if (lyricsSection && index === 2) lyricsSection.classList.remove("playing-mode");
+            if (lyricsSection && index === 0) lyricsSection.classList.remove("playing-mode");
             currentTrack = -1;
             return;
         }
@@ -302,8 +302,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 trackPlayBtns[index].innerHTML = '<i class="fas fa-pause"></i>';
                 trackPlayBtns[index].classList.add("playing");
                 trackPlayers[index].classList.add("track-active");
-                // If it's track 3 (Hold Me Close), sync with hero button & lyrics
-                if (index === 2) {
+                // If it's track 1 (Hold Me Close), sync with hero button & lyrics
+                if (index === 0) {
                     if (ctaPlayBtn) {
                         ctaPlayBtn.innerHTML = 'PAUSE <i class="fas fa-pause ml-2"></i>';
                         ctaPlayBtn.classList.add("playing");
@@ -358,8 +358,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (trackProgresses[i]) trackProgresses[i].style.width = `${pct}%`;
                 if (trackTimes[i]) trackTimes[i].textContent = `${formatTime(current)} / ${formatTime(MAX_PREVIEW)}`;
                 
-                // Lyrics sync only for track 3 (index 2)
-                if (i === 2 && !trackAudios[i].paused) {
+                // Lyrics sync only for track 1 (Hold Me Close, index 0)
+                if (i === 0 && !trackAudios[i].paused) {
                     let activeLine = null;
                     lyricLinesAudio.forEach(line => {
                         const t = parseFloat(line.getAttribute("data-time"));
@@ -373,12 +373,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // Hero LISTEN NOW button plays/pauses track 3 (Hold Me Close)
+    // Hero LISTEN NOW button plays/pauses track 1 (Hold Me Close, index 0)
     if (ctaPlayBtn) {
         ctaPlayBtn.addEventListener("click", (e) => {
             e.preventDefault();
             e.stopPropagation();
-            playTrack(2); // Track 3 = index 2
+            playTrack(0); // Track 1 = Hold Me Close = index 0
         });
     }
 
