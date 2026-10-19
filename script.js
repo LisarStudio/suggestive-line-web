@@ -296,6 +296,9 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Play the new track
         currentTrack = index;
+        if (trackAudios[index].readyState === 0) {
+            trackAudios[index].load();
+        }
         const playPromise = trackAudios[index].play();
         if (playPromise !== undefined) {
             playPromise.then(() => {
